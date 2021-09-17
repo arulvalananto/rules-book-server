@@ -22,4 +22,4 @@ const rulesSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Rules", rulesSchema, "RulesBook");
+module.exports = mongoose.model("Rules", rulesSchema);

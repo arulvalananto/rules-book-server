@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
   // Hash the password with cost of 12
@@ -41,4 +41,11 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Users", userSchema, "RulesBook");
+userSchema.methods.checkPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+module.exports = mongoose.model("Users", userSchema);
