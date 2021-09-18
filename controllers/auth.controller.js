@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
@@ -20,10 +21,12 @@ const sendToken = (id) => {
 exports.register = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
 
+  const hashPassword = await bcrypt.hash(password, 12);
+
   const user = new User({
     name,
     email,
-    password,
+    password: hashPassword,
   });
 
   await user.save();

@@ -8,6 +8,7 @@ const rulesSchema = mongoose.Schema(
       maxLength: [50, "Rule content should be below 50 characters"],
     },
     pinned: {
+      type: Boolean,
       default: false,
       enum: {
         values: [true, false],
